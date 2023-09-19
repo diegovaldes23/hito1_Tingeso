@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
+
 <body>
     <div class="container-sm">
     	<table class="table">
@@ -12,12 +13,12 @@
     			<tr>
 	    			<th>ID</th>
 					<th>rut</th>
-	    			<th>nombres</th>
-	    			<th>apellidos</th>
-					<th>tipo de colegio</th>
-					<th>nombre del colegio</th>
-					<th>fecha de nacimiento</th>
-					<th>año de egreso</th>
+	    			<th>Nombres</th>
+	    			<th>Apellidos</th>
+					<th>Tipo de colegio</th>
+					<th>Nombre del colegio</th>
+					<th>Fecha de nacimiento</th>
+					<th>Año de egreso</th>
     			</tr>
     		</thead>
     		<tbody>
@@ -39,5 +40,31 @@
     		</tbody>
     	</table>
     </div>
+
+	<div class="container-sm">
+		<table class="table">
+			<thead class="thead-dark">
+			<tr>
+
+				<th>rut</th>
+				<th>puntaje</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="pruebas:${pruebas}">
+
+
+				<td th:text="${pruebas.rut_estudiante}"></td>
+				<td th:text="${pruebas.puntaje}"></td>
+
+				<td>
+					<a class="btn btn-primary" href="#" role="button">Editar</a>
+					<a class="btn btn-danger" href="#" role="button">Eliminar</a>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+
 </body>
 </html>
