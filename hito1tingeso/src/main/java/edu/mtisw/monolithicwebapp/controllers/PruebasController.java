@@ -14,13 +14,23 @@ import java.util.ArrayList;
 public class PruebasController {
     @Autowired
     PruebasService pruebasService;
-
+    @GetMapping("/fileUpload")
+    public String main() {
+        return "fileUpload";
+    }
 
     @GetMapping("/listarpruebas")
     public String listarpruebas(Model model) {
         ArrayList<PruebasEntity>pruebas= pruebasService.obtenerPruebas();
         model.addAttribute("pruebas",pruebas);
         return "index";
+    }
+
+    @GetMapping("/fileInformation")
+    public String listar(Model model) {
+        ArrayList<PruebasEntity> datas = pruebasService.obtenerPruebas();
+        model.addAttribute("datas", datas);
+        return "fileInformation";
     }
 
 }

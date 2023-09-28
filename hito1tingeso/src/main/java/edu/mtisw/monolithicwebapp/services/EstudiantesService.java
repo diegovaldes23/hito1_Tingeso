@@ -8,21 +8,30 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Optional;
 
-@Service //CAPA LOGICA DE NEGOCIO
+@Service //Capa de Lógica de Negocios
+
 public class EstudiantesService {
     @Autowired
     EstudiantesRepository estudiantesRepository;
 
     //Obtener todos los estudiantes
     public ArrayList<EstudiantesEntity> obtenerEstudiantes(){
-
         return (ArrayList<EstudiantesEntity>) estudiantesRepository.findAll();
     }
 
     //Guardar un estudiante
-    public EstudiantesEntity guardarEstudiantes(EstudiantesEntity estudiante){
-        return estudiantesRepository.save(estudiante);
+    public void guardarEstudiantes(String rut, String nombres, String apellidos, String tipo_colegio,String nombre_colegio,String fecha_nacimiento,int ano_egreso ){
+        EstudiantesEntity estudiante = new EstudiantesEntity();
+        estudiante.setNombres(nombres);
+        estudiante.setApellidos(apellidos);
+        estudiante.setTipo_colegio(tipo_colegio);
+        estudiante.setNombre_colegio(nombre_colegio);
+        estudiante.setFecha_nacimiento(fecha_nacimiento);
+        estudiante.setAno_egreso(ano_egreso);
+        estudiantesRepository.save(estudiante);
     }
+
+
 
     //Obtener estudiante por id
     public Optional<EstudiantesEntity> obtenerPorId(Long id){

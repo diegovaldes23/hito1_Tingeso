@@ -1,5 +1,6 @@
 package edu.mtisw.monolithicwebapp.entities;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,10 +15,7 @@ import javax.persistence.*;
 public class EstudiantesEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //Autoincremtar el id
-    @Column(unique = true, nullable = false) //que sea el valor unico del id
-    private Long id;
-
+    @Column(unique = true, nullable = false)
     private String rut;
     private String nombres;
     private String apellidos;
