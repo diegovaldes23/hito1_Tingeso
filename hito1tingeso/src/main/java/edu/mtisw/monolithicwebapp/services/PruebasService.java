@@ -32,7 +32,7 @@ public class PruebasService {
     public String guardar(MultipartFile file){
         String filename = file.getOriginalFilename();
         if(filename != null){
-            if(!file.isEmpty()){
+            if((!file.isEmpty()) && (filename.toUpperCase().equals("DATA.TXT"))){
                 try{
                     byte [] bytes = file.getBytes();
                     Path path  = Paths.get(file.getOriginalFilename());
@@ -52,23 +52,18 @@ public class PruebasService {
 
 
     @Generated
-    public void leerCsv(String direccion){
+    public void leerTxt(String direccion){
         String texto = "";
         BufferedReader bf = null;
         pruebasRepository.deleteAll();
+
         try{
             bf = new BufferedReader(new FileReader(direccion));
             String temp = "";
             String bfRead;
-            int count = 1;
             while((bfRead = bf.readLine()) != null){
-                if (count == 1){
-                    count = 0;
-                }
-                else{
-                    guardarPruebasDB(bfRead.split(";")[0], bfRead.split(";")[1], Integer.parseInt(bfRead.split(";")[2]));
-                    temp = temp + "\n" + bfRead;
-                }
+                guardarPruebasDB(bfRead.split(",")[0], bfRead.split(",")[1], bfRead.split(",")[2]);
+                temp = temp + "\n" + bfRead;
             }
             texto = temp;
             System.out.println("Archivo leido exitosamente");
@@ -90,8 +85,7 @@ public class PruebasService {
     }
 
 
-
-    public void guardarPruebasDB(String rut, String fecha_examen, int puntaje){
+    public void guardarPruebasDB(String rut, String fecha_examen, String puntaje){
         PruebasEntity newPrueba = new PruebasEntity();
         newPrueba.setRut_estudiante(rut);
         newPrueba.setFecha_examen(fecha_examen);

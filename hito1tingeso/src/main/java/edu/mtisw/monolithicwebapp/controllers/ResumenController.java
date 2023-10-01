@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 @Controller
@@ -23,9 +25,21 @@ public class ResumenController {
     public String listarR(Model model){
         ArrayList<ResumenEntity> resumenes = resumenService.obtenerResumenes();
         model.addAttribute("resumenes", resumenes);
-        return "resumen";//Debo cambiar esto
+        return "resumen";
 
 
+    }
+
+    @GetMapping("/generaResumen")
+    public String resumen() {
+        return "generaResumen";
+    }
+    @PostMapping("/generaResumen")
+    public String nuevoResumen(@RequestParam("rut") String rut) throws ParseException {
+
+        resumenService.calculoResumen(rut);
+
+        return "generaResumen";
     }
 
 

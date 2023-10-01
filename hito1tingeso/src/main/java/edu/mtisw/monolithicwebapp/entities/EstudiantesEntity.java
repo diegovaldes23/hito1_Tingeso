@@ -15,7 +15,8 @@ import javax.persistence.*;
 public class EstudiantesEntity {
 
     @Id
-    @Column(unique = true, nullable = false)
+    @NotNull
+
     private String rut;
     private String nombres;
     private String apellidos;

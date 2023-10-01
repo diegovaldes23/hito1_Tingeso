@@ -103,7 +103,7 @@
 <body>
 <header class="header">
     <div class="logo">
-        <h1>MilkStgo</h1>
+        <h1>TopEducation</h1>
     </div>
     <nav>
     </nav>
@@ -115,13 +115,13 @@
     <table border = "1" class = "content-table">
         <thead>
         <tr>
-            <th style = "color:white">Rut</th>
-            <th style = "color:white">Fecha del examen</th>
-            <th style = "color:white">Puntaje</th>
+            <th>Rut</th>
+            <th>Fecha del examen</th>
+            <th>Puntaje</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="prueba:${pruebas}">
+        <tr th:each="prueba:${datas}">
             <td th:text="${prueba.rut_estudiante}"></td>
             <td th:text="${prueba.fecha_examen}"></td>
             <td th:text="${prueba.puntaje}"></td>

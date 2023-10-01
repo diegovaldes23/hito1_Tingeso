@@ -13,6 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class ResumenEntity {
     @Id
+    @NotNull
     @Column(unique = true, nullable = false)
     private String rut;
     private String nombre_estudiante;

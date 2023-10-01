@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Listado de Cuotas</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        header {
+            background-color: #1b3039;
+            color: white;
+            padding: 10px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-family: 'Pacifico', serif;
+        }
+
+        .main-container {
+            margin: 20px 5%;
+        }
+
+        .search-form {
+            border: 1px solid #ced4da;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-form label {
+            font-weight: bold;
+        }
+
+        .search-form input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        .search-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #1b3039;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .search-form button:hover {
+            background-color: #0eebff;
+        }
+
+        .cuotas-table {
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .cuotas-table th, .cuotas-table td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        .cuotas-table thead {
+            background-color: #343a40;
+            color: white;
+        }
+
+        .cuotas-table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <h1>TopEducation</h1>
+    <nav>
+        <a class="btn" href="/"><button>Volver al menú principal</button></a>
+        <a class="btn-2" href="/listar-cuotas"><button>Ver cuotas</button></a>
+    </nav>
+</header>
+
+<div class="main-container">
+    <!-- Formulario para encontrar estudiante -->
+    <div class="search-form">
+        <h2>Buscar Estudiante</h2>
+        <form th:action="@{/cantidad-cuotas}" method="POST">
+            <label for="rut">Rut</label>
+            <input type="text" id="rut" placeholder="Ingrese el rut del estudiante" name="rut" required>
+
+            <label for="cantidad_cuotas">Cantidad de cuotas</label>
+            <input type="text" id="cantidad_cuotas" placeholder="Ingrese la cantidad de cuotas" name="cantidad_cuotas" required>
+
+            <button type="submit">Buscar Estudiante</button>
+
+        </form>
+        <br>
+        <!-- Mostrar el mensaje solo si está presente -->
+        <u><b> <h2 th:text="${mensajeC}"></h2></b></u>
+        <br>
+
+
+
+    </div>
+</div>
+</body>
+</html>

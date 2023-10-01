@@ -47,6 +47,12 @@ public class EstudiantesController {
 								  @RequestParam("ano_egreso") int ano_egreso) {
 		// Llama al servicio para guardar el nuevo estudiante
 		estudiantesService.guardarEstudiantes(rut, nombres, apellidos, tipo_colegio, nombre_colegio, fecha_nacimiento, ano_egreso);
-		return "index"; // Redirige a la página de creación de estudiantes después de guardar
+		return "main"; // Redirige a la página de creación de estudiantes después de guardar
+	}
+
+
+	@GetMapping("/buscar-estudiante")
+	public String buscarestudiante() {
+		return "cuotas";
 	}
 }
