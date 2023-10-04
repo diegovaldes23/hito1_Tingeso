@@ -4,10 +4,13 @@ package edu.mtisw.monolithicwebapp.services;
 import edu.mtisw.monolithicwebapp.entities.CuotasEntity;
 import edu.mtisw.monolithicwebapp.entities.EstudiantesEntity;
 import edu.mtisw.monolithicwebapp.repositories.CuotasRepository;
+import edu.mtisw.monolithicwebapp.repositories.ResumenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +18,6 @@ import java.util.Optional;
 public class CuotasService {
     @Autowired
     CuotasRepository cuotasRepository;
-
 
     //Obtener cuotas
 
@@ -27,18 +29,21 @@ public class CuotasService {
     }
 
     //Guardar una cuota
-    public void guardarCuotas(String rut, int cantidad_cuota ){
-        CuotasEntity cuotas = new CuotasEntity();
-        cuotas.setRut(rut);
-        cuotas.setCantidad_cuotas(cantidad_cuota);
-        cuotasRepository.save(cuotas);
-    }
-
     public void pagando(int id) {
         CuotasEntity cuota = cuotasRepository.findById(id);
-        cuota.setEstado("Pagado");
-        cuotasRepository.save(cuota);
 
+        // Obtener la fecha actual
+        LocalDate fechaActual = LocalDate.now();
+
+        // Verificar si la fecha actual NO está entre el 3 y el 10 de cada mes
+        if (fechaActual.getDayOfMonth() >=3  && fechaActual.getDayOfMonth() <= 10) {
+            cuota.setEstado("Pagado");
+
+            // Establecer la fecha de vencimiento como la fecha actual
+            cuota.setFecha_pago(fechaActual.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+
+            cuotasRepository.save(cuota);
+        }
     }
 
 }

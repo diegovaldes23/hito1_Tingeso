@@ -8,19 +8,18 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "pruebas") // Conexion con el nombre de mysql
-@Data //Getters y setters  librerias lombok
-@NoArgsConstructor // Constructor con lombok
-@AllArgsConstructor
+@Table(name = "pruebas")    // Nombre de la tabla en la base de datos
+@Data                       // Genera automáticamente getters, setters, toString, equals, y hashCode
+@NoArgsConstructor          // Constructor sin argumentos
+@AllArgsConstructor         // Constructor con todos los argumentos
 public class PruebasEntity {
     @Id
-    @NotNull
+    @NotNull                                            // Anotación de validación personalizada
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Generación automática de claves primarias
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String rut_estudiante;
-    private String fecha_examen;
-    private String puntaje;
-
-
+    private int id;                 // Identificador único de la prueba
+    private String rut_estudiante;  // Rut del estudiante asociado a la prueba
+    private String fecha_examen;    // Fecha en la que se realizó el examen (considera usar un tipo de dato de fecha)
+    private String puntaje;         // Puntaje obtenido en la prueba
 }
+

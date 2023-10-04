@@ -8,21 +8,21 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "estudiantes") // Conexion con el nombre de mysql
-@Data //Getters y setters  librerias lombok
-@NoArgsConstructor // Constructor con lombok
-@AllArgsConstructor
+@Table(name = "estudiantes")            // Nombre de la tabla en la base de datos
+@Data                                   // Genera automáticamente getters, setters, toString, equals, y hashCode
+@NoArgsConstructor                      // Constructor sin argumentos
+@AllArgsConstructor                     // Constructor con todos los argumentos
 public class EstudiantesEntity {
 
     @Id
-    @NotNull
+    @NotNull // Anotación de validación personalizada
 
-    private String rut;
-    private String nombres;
-    private String apellidos;
-    private String tipo_colegio;
-    private String nombre_colegio;
-    private String fecha_nacimiento;
-    private int ano_egreso;
+    private String rut;             // Identificación única del estudiante
+    private String nombres;         // Nombres del estudiante
+    private String apellidos;       // Apellidos del estudiante
+    private String tipo_colegio;    // Tipo de colegio del estudiante
+    private String nombre_colegio;  // Nombre del colegio del estudiante
+    private String fecha_nacimiento;// Fecha de nacimiento del estudiante (considera usar un tipo de dato de fecha)
+    private int ano_egreso;         // Año en que el estudiante se graduó
 
 }

@@ -7,11 +7,9 @@ import edu.mtisw.monolithicwebapp.repositories.CuotasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Access;
 import java.text.ParseException;
-import java.util.List;
+import java.util.ArrayList;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,28 +25,68 @@ public class Pago {
     @Autowired
     private EstudiantesService estudiantesService;
 
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    @Autowired
+    PruebasService pruebasService;
 
-    public void calculoCuotas(String rut,int cantidad_cuotas) throws ParseException {
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+
+    public void calculoCuotas(String rut, int cantidad_cuotas) throws ParseException {
 
         EstudiantesEntity estudianteActual = estudiantesService.findByRut(rut);
+        ArrayList<PruebasEntity> pruebaActual = pruebasService.findByRut(rut);
 
-        for (int i = 1; i <= cantidad_cuotas; i++){
+        // Inicializar el descuento acumulado
+        double descuentoAcumulado = 0.0;
+
+        if(cantidad_cuotas != 0){
+            for (int i = 1; i <= cantidad_cuotas; i++) {
+                CuotasEntity estudiante_reporteCuotas = new CuotasEntity();
+
+                // Calcular el descuento acumulado para esta cuota
+                double nuevo_arancel = division(cantidad_cuotas, calcularDescuentoAcumulable(calcularDescuentoColegio(estudianteActual, cantidad_cuotas), calcularDescuentoAno(estudianteActual, cantidad_cuotas)));
+                double descuentoPep = calcularDescuentoPuntajes(pruebaActual, calcularFecha(i), cantidad_cuotas, nuevo_arancel);
+
+                // Acumular el descuento
+                descuentoAcumulado += descuentoPep;
+
+                estudiante_reporteCuotas.setRut(estudianteActual.getRut());
+                estudiante_reporteCuotas.setCantidad_cuotas(cantidad_cuotas);
+                estudiante_reporteCuotas.setCapital(nuevo_arancel);
+                estudiante_reporteCuotas.setDescuento_prueba(descuentoAcumulado); // Usar el descuento acumulado
+                estudiante_reporteCuotas.setMulta(0.0);
+                estudiante_reporteCuotas.setMonto_total(nuevo_arancel - descuentoAcumulado); // Restar el descuento acumulado
+                estudiante_reporteCuotas.setEstado("Pendiente");
+                estudiante_reporteCuotas.setFecha_vencimiento(calcularFecha(i));
+
+                cuotasRepository.save(estudiante_reporteCuotas);
+            }
+        }else {
             CuotasEntity estudiante_reporteCuotas = new CuotasEntity();
+
+            double nuevo_arancel = calcularDescuentoAcumulable( calcularDescuentoColegio(estudianteActual, cantidad_cuotas), calcularDescuentoAno(estudianteActual, cantidad_cuotas));
+            double descuentoPep = calcularDescuentoPuntajes(pruebaActual, calcularFecha(1), cantidad_cuotas, nuevo_arancel);
+
             estudiante_reporteCuotas.setRut(estudianteActual.getRut());
             estudiante_reporteCuotas.setCantidad_cuotas(cantidad_cuotas);
-            estudiante_reporteCuotas.setCapital(division(cantidad_cuotas,calcularDescuentoAcumulable(calcularDescuentoColegio(estudianteActual,cantidad_cuotas),calcularDescuentoAno(estudianteActual,cantidad_cuotas))));
-            //estudiante_reporteCuotas.setDescuento_prueba(calcularDescuentoPrueba(estudianteActual));
-            //estudiante_reporteCuotas.setDescuento_multa(calcularDescuentoMulta(estudianteActual));
-            //Monto total
-            estudiante_reporteCuotas.setEstado("Pendiente");
-            estudiante_reporteCuotas.setFecha_vencimiento(calcularFecha(i));
-            //fecha
+            estudiante_reporteCuotas.setCapital(nuevo_arancel);
+            estudiante_reporteCuotas.setDescuento_prueba(descuentoPep); // Usar el descuento acumulado
+            estudiante_reporteCuotas.setMulta(0.0);
+            estudiante_reporteCuotas.setMonto_total(nuevo_arancel - descuentoPep); // Restar el descuento acumulado
+            estudiante_reporteCuotas.setEstado("Contado");
 
             cuotasRepository.save(estudiante_reporteCuotas);
+
         }
     }
 
+
+    public int contarPruebas(ArrayList<PruebasEntity> pruebas){
+        long count = pruebas.stream()
+                .count();
+
+        // Convertir el conteo a un entero
+        return (int) count;
+    }
     public String calcularFecha(int mes) {
         // Obtener la fecha actual
         Calendar calendar = Calendar.getInstance();
@@ -161,40 +199,68 @@ public class Pago {
 
 
 
-    /*
-    public double calcularDescuentoPuntajes(PruebasEntity prueba,String tipoPago, int arancelmes) {
+    public static double calcularDescuentoPuntajes(ArrayList<PruebasEntity> pruebas, String vencimiento, int cantidad_cuotas, double capital) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-        double descuentopuntaje = 0.0;
-        double pagafinal=0.0;
+        try {
+            // Convertir la fecha de vencimiento a formato Date
+            Date fechaVencimiento = dateFormat.parse(vencimiento);
 
-        // Convertir el tipo de pago ingresado a minúsculas para hacerlo insensible a mayúsculas/minúsculas
-        String tipoPagoIngresado = tipoPago.toLowerCase();
+            // Obtener el mes de la fecha de vencimiento
+            int mesVencimiento = fechaVencimiento.getMonth() + 1; // Se suma 1 porque los meses comienzan desde 0
 
-        // Calcular descuento según el puntaje
-        int puntajeprom = prueba.getPuntaje();
-        if (tipoPagoIngresado.equals("cuotas")) {
+            double suma = 0.0;
+            int contador = 0;
 
-            if (puntajeprom < 850) {
-                descuentopuntaje = 0.0;
-            } else if (puntajeprom <= 899) {
-                descuentopuntaje = 0.02;
-            } else if (puntajeprom <= 949) {
-                descuentopuntaje = 0.05;
-            } else if (puntajeprom <= 1000) {
-                descuentopuntaje = 0.1;
+            //System.out.println("Mes de vencimiento: " + mesVencimiento);
+
+            for (PruebasEntity prueba : pruebas) {
+                // Convertir la fecha de la prueba a formato Date
+                Date fechaPrueba = dateFormat.parse(prueba.getFecha_examen());
+
+                // Obtener el mes de la fecha de la prueba
+                int mesPrueba = fechaPrueba.getMonth() + 1;
+
+                //System.out.println("Mes de la prueba: " + mesPrueba);
+
+                if (mesPrueba == mesVencimiento) {
+                    //System.out.println("Entró");
+
+                    // Convertir el puntaje a double
+                    double puntaje = Double.parseDouble(prueba.getPuntaje());
+                    suma += puntaje;
+                    contador++;
+                }
             }
-        }else {
-            //ESTA POR VERSE LA PARTE DEL CONTADO
+
+            if (contador == 0) {
+                //System.out.println("No hay pruebas en el mes.");
+                return 0.0;
+            }
+
+            double puntajePromedio = suma / contador;
+            //System.out.println("Puntaje promedio: " + puntajePromedio);
+
+            double descuentoPuntaje = 0.0;
+
+            if (puntajePromedio >= 950 && puntajePromedio <= 1000) {
+                descuentoPuntaje = 0.10; // Descuento del 10% para puntajes entre 950 y 1000
+            } else if (puntajePromedio >= 900 && puntajePromedio < 950) {
+                descuentoPuntaje = 0.05; // Descuento del 5% para puntajes entre 900 y 949
+            } else if (puntajePromedio >= 850 && puntajePromedio < 900) {
+                descuentoPuntaje = 0.02; // Descuento del 2% para puntajes entre 850 y 899
+            }
+
+            double pagoFinal = capital * descuentoPuntaje;
+            //System.out.println("Pago final después del descuento de puntaje: " + pagoFinal);
+
+
+            return pagoFinal;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0.0;
         }
-
-        pagafinal = arancelmes - (arancelmes*descuentopuntaje);
-        return pagafinal;
-
-
-
-    }*/
-
-
-
+    }
 
 }

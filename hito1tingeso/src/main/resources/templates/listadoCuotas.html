@@ -108,6 +108,7 @@
             <th>Monto Total</th>
             <th>Estado</th>
             <th>Fecha Vencimiento</th>
+            <th>Fecha de Pago</th>
             <th>Pagar</th>
         </tr>
         </thead>
@@ -121,6 +122,8 @@
             <td th:text="${cuota.monto_total}"></td>
             <td th:text="${cuota.estado}"></td>
             <td th:text="${cuota.fecha_vencimiento}"></td>
+            <td th:text="${cuota.fecha_pago}"></td>
+
             <td>
                 <form action="/procesar-pago" method="post">
                     <input type="hidden" name="id" th:value="${cuota.id}" />

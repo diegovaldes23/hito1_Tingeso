@@ -1,4 +1,5 @@
 package edu.mtisw.monolithicwebapp.services;
+import edu.mtisw.monolithicwebapp.entities.CuotasEntity;
 import edu.mtisw.monolithicwebapp.entities.EstudiantesEntity;
 import edu.mtisw.monolithicwebapp.entities.PruebasEntity;
 import edu.mtisw.monolithicwebapp.repositories.PruebasRepository;
@@ -21,6 +22,9 @@ import java.util.Optional;
 public class PruebasService {
     @Autowired
     PruebasRepository pruebasRepository;
+
+
+
 
     private final Logger logg = LoggerFactory.getLogger(PruebasService.class);
 
@@ -55,7 +59,7 @@ public class PruebasService {
     public void leerTxt(String direccion){
         String texto = "";
         BufferedReader bf = null;
-        pruebasRepository.deleteAll();
+        //pruebasRepository.deleteAll();
 
         try{
             bf = new BufferedReader(new FileReader(direccion));
@@ -98,19 +102,8 @@ public class PruebasService {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public ArrayList<PruebasEntity> findByRut(String rut) {  return  (ArrayList<PruebasEntity>) pruebasRepository.findByRut(rut);
+    }
 
 
 }

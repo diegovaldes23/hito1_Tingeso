@@ -63,40 +63,57 @@
         .search-form button:hover {
             background-color: #0eebff;
         }
-
-        .cuotas-table {
-            margin-top: 20px;
-            width: 100%;
+        .header .btn button{
+            margin-left: 20px;
+            font-weight: 700;
+            color: #1b3039;
+            padding: 9px 25px;
+            background: #eceff1;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease 0s;
+        }
+        .header .btn button:hover{
+            background-color: #e2f1f8;
+            color: #0eebff;
+            transform: scale(1.1);
         }
 
-        .cuotas-table th, .cuotas-table td {
-            padding: 12px;
-            text-align: left;
+
+        .header .btn-2 button{
+            margin-left: 20px;
+            font-weight: 700;
+            color: #1b3039;
+            padding: 9px 25px;
+            background: #eceff1;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease 0s;
+        }
+        .header .btn-2 button:hover{
+            background-color: #e2f1f8;
+            color: #0eebff;
+            transform: scale(1.1);
         }
 
-        .cuotas-table thead {
-            background-color: #343a40;
-            color: white;
-        }
 
-        .cuotas-table tbody tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
 
-        .error-message {
-            color: red;
-            margin-top: 10px;
-        }
+
+
     </style>
 </head>
 
 <body>
-<header>
-    <h1>TopEducation</h1>
-    <nav>
-        <a class="btn" href="/"><button>Volver al menú principal</button></a>
-        <a class="btn" href="/listar-resumenes"><button>Ver listado de resumenes</button></a>
 
+<header class="header">
+    <div class="logo">
+        <h1>TopEducation</h1>
+    </div>
+    <nav>
+    <a class="btn" href="/"><button>Volver al menú principal</button></a>
+    <a class="btn" href="/listar-resumenes"><button>Ver listado de resumenes</button></a>
     </nav>
 </header>
 
@@ -109,7 +126,7 @@
             <input type="text" id="rut" placeholder="Ingrese el rut del estudiante" name="rut" required>
 
             <button type="submit">Generar Resumen </button>
-
+        </form>
     </div>
 </div>
 </body>

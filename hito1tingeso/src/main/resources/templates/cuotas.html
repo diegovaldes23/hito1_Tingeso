@@ -6,19 +6,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
+
     <style>
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f8f9fa;
-        }
-
-        header {
-            background-color: #1b3039;
-            color: white;
-            padding: 10px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
         header h1 {
@@ -63,40 +55,81 @@
         .search-form button:hover {
             background-color: #0eebff;
         }
-
-        .cuotas-table {
-            margin-top: 20px;
-            width: 100%;
+        form {
+            border: 6px solid #f1f1f1;
         }
 
-        .cuotas-table th, .cuotas-table td {
-            padding: 12px;
-            text-align: left;
+        h1 {
+            text-align:center;
+        }
+        button:hover {
+            opacity: 0.8;
         }
 
-        .cuotas-table thead {
-            background-color: #343a40;
+        span.psw {
+            float: right;
+            padding-top: 0;
+            padding-right: 15px;
+        }
+        .header{
+            background-color: #1b3039;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            height: 85px;
+            padding: 5px 10%;
+        }
+        .header .logo{
+            margin-right: auto;
             color: white;
+            font-family: 'Pacifico',serif;
+        }
+        .header .btn button{
+            margin-left: 20px;
+            font-weight: 700;
+            color: #1b3039;
+            padding: 9px 25px;
+            background: #eceff1;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease 0s;
+        }
+        .header .btn button:hover{
+            background-color: #e2f1f8;
+            color: #0eebff;
+            transform: scale(1.1);
         }
 
-        .cuotas-table tbody tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
 
-        .error-message {
-            color: red;
-            margin-top: 10px;
+        .header .btn-2 button{
+            margin-left: 20px;
+            font-weight: 700;
+            color: #1b3039;
+            padding: 9px 25px;
+            background: #eceff1;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease 0s;
+        }
+        .header .btn-2 button:hover{
+            background-color: #e2f1f8;
+            color: #0eebff;
+            transform: scale(1.1);
         }
     </style>
-</head>
 
+</head>
 <body>
-<header>
-    <h1>TopEducation</h1>
+<header class="header">
+    <div class="logo">
+        <h1>TopEducation</h1>
+    </div>
     <nav>
-        <a class="btn" href="/"><button>Volver al menú principal</button></a>
-        <a class="btn-2" href="/listar-cuotas"><button>Ver cuotas</button></a>
     </nav>
+    <a class="btn" href="/"><button>Volver al menú principal</button></a>
+    <a class="btn-2" href="/listar-cuotas"><button>Ver cuotas</button></a>
 </header>
 
 <div class="main-container">
@@ -111,15 +144,11 @@
             <input type="text" id="cantidad_cuotas" placeholder="Ingrese la cantidad de cuotas" name="cantidad_cuotas" required>
 
             <button type="submit">Buscar Estudiante</button>
-
         </form>
         <br>
         <!-- Mostrar el mensaje solo si está presente -->
         <u><b> <h2 th:text="${mensajeC}"></h2></b></u>
         <br>
-
-
-
     </div>
 </div>
 </body>

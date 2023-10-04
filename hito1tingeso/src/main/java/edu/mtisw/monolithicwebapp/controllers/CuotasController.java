@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Controller
@@ -60,7 +61,6 @@ public class CuotasController {
 
         if (pagoService.maximoCuotasColegio(rut, cantidad_cuotas)){
             pagoService.calculoCuotas(rut,cantidad_cuotas);
-            //resumenService.calculoResumen(rut,cantidad_cuotas);
 
 
         }else {
@@ -74,10 +74,12 @@ public class CuotasController {
     }
 
     @PostMapping("/procesar-pago")
-    public String pagando(@RequestParam("id") int id) throws ParseException{
+    public String pagando(@RequestParam("id") int id) throws ParseException {
+
+
+        // Procesar el pago si la fecha está dentro del rango
         cuotasService.pagando(id);
         return "redirect:/listar-cuotas";
-
     }
 
 
