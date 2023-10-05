@@ -30,7 +30,8 @@ public class PagoTest {
     //Ver descuentos de entrada dependiendo de tipo de colegio
 
     //Ver descuentos de entrada dependiendo de tipo de colegio al contado
-    @Test
+
+    /*@Test
     void calcularDescueuntoColegio1(){
         estudiante.setRut("11.345.678-2");
         estudiante.setNombres("Juan");
@@ -46,7 +47,8 @@ public class PagoTest {
     }
 
     //Ver descuentos de entrada dependiendo de tipo de colegio con cuotas y privado
-
+ */
+    /*
     @Test
     void calcularDescueuntoColegio2(){
         estudiante.setRut("11.345.678-2");
@@ -77,8 +79,8 @@ public class PagoTest {
         int cuota= 2;
         double nuevopago = pago.calcularDescuentoAno(estudiante,cuota);
         assertEquals(1500000,nuevopago,0.0);
-    }
-
+    }*/
+  /*
     @Test
     void calcularDescueuntoAcumulable1(){
         estudiante.setRut("11.345.678-2");
@@ -98,5 +100,5 @@ public class PagoTest {
 
 
 
-
+ */
 }

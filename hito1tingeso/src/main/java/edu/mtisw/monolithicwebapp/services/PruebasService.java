@@ -1,6 +1,4 @@
 package edu.mtisw.monolithicwebapp.services;
-import edu.mtisw.monolithicwebapp.entities.CuotasEntity;
-import edu.mtisw.monolithicwebapp.entities.EstudiantesEntity;
 import edu.mtisw.monolithicwebapp.entities.PruebasEntity;
 import edu.mtisw.monolithicwebapp.repositories.PruebasRepository;
 import lombok.Generated;
@@ -23,9 +21,6 @@ public class PruebasService {
     @Autowired
     PruebasRepository pruebasRepository;
 
-
-
-
     private final Logger logg = LoggerFactory.getLogger(PruebasService.class);
 
     //Obtener todos las pruebas
@@ -36,7 +31,7 @@ public class PruebasService {
     public String guardar(MultipartFile file){
         String filename = file.getOriginalFilename();
         if(filename != null){
-            if((!file.isEmpty()) && (filename.toUpperCase().equals("DATA.TXT"))){
+            if(!file.isEmpty()){
                 try{
                     byte [] bytes = file.getBytes();
                     Path path  = Paths.get(file.getOriginalFilename());
@@ -59,7 +54,7 @@ public class PruebasService {
     public void leerTxt(String direccion){
         String texto = "";
         BufferedReader bf = null;
-        //pruebasRepository.deleteAll();
+        pruebasRepository.deleteAll();
 
         try{
             bf = new BufferedReader(new FileReader(direccion));

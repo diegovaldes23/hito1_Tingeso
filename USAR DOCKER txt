@@ -1,0 +1,6 @@
+USAR DOCKER
+docker login  
+docker build -t diez2332/tingeso1 .
+docker push diez2332/tingeso1
+docker compose up
+

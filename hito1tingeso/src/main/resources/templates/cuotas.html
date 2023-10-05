@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <title>Listado de Cuotas</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -144,11 +144,9 @@
             <input type="text" id="cantidad_cuotas" placeholder="Ingrese la cantidad de cuotas" name="cantidad_cuotas" required>
 
             <button type="submit">Buscar Estudiante</button>
+
         </form>
-        <br>
-        <!-- Mostrar el mensaje solo si está presente -->
-        <u><b> <h2 th:text="${mensajeC}"></h2></b></u>
-        <br>
+
     </div>
 </div>
 </body>
