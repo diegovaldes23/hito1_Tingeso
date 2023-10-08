@@ -6,6 +6,7 @@ import edu.mtisw.monolithicwebapp.entities.PruebasEntity;
 import edu.mtisw.monolithicwebapp.repositories.CuotasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.time.Year;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -79,13 +80,32 @@ public class Pago {
         }
     }
 
+    public double calcularDescuentoColegio(EstudiantesEntity estudiante,int cuota ){
+        double arancel = 1500000;
+        double descuentoTipoColegio = 0.0;
 
-    public int contarPruebas(ArrayList<PruebasEntity> pruebas){
-        long count = pruebas.stream()
-                .count();
+        // Convertir el tipo de colegio ingresado a minúsculas para hacerlo insensible a mayúsculas/minúsculas
+        String tipoColegioIngresado = estudiante.getTipo_colegio().toLowerCase();
 
-        // Convertir el conteo a un entero
-        return (int) count;
+
+        // Calcular descuento según Tipo de colegio de procedencia
+        if (cuota > 0) {
+            switch (tipoColegioIngresado) {
+                case "municipal":
+                    descuentoTipoColegio = 0.2; // 20% de descuento para colegio municipal
+                    break;
+                case "subvencionado":
+                    descuentoTipoColegio = 0.1; // 10% de descuento para colegio subvencionado
+                    break;
+                case "privado":
+                    descuentoTipoColegio = 0.0; // Sin descuento para colegio privado
+                    break;
+            }
+        } else if (cuota == 0) {
+            descuentoTipoColegio = 0.5; // 50% de descuento para pago al contado
+        }
+
+        return  arancel * descuentoTipoColegio;
     }
     public String calcularFecha(int mes) {
         // Obtener la fecha actual
@@ -99,6 +119,38 @@ public class Pago {
 
         // Obtener la fecha resultante como String formateado
         return DATE_FORMAT.format(calendar.getTime());
+    }
+
+    public double calcularDescuentoAno(EstudiantesEntity estudiante,int cuota){
+
+        double arancel = 1500000;
+        double descuentoAnos = 0.0;
+
+        if(cuota >0 ) {
+            // Obtener el año actual
+            int anoActual = Year.now().getValue();
+
+            // Calcular descuento según años desde que egresó del colegio
+            int cantidadAnos = anoActual - estudiante.getAno_egreso();
+            if (cantidadAnos < 1) {
+                descuentoAnos = 0.15; // 15% de descuento para menos de 1 año
+            } else if (cantidadAnos >= 1 && cantidadAnos <= 2) {
+                descuentoAnos = 0.08; // 8% de descuento para 1-2 años
+            } else if (cantidadAnos >= 3 && cantidadAnos <= 4) {
+                descuentoAnos = 0.04; // 4% de descuento para 3-4 años
+            }
+        }
+        else if(cuota==0){
+            descuentoAnos=0;
+        }
+        return arancel * descuentoAnos;
+    }
+
+    //Suma de los descuentos acumulables
+
+    public double calcularDescuentoAcumulable(double descuento1,double descuento2){
+        double arancel = 1500000;
+        return arancel - (descuento1 + descuento2);
     }
     //Método para calcular la cuota con el nuevo total de la resta del arancel y sus descuentos
     public double division(int cuota,double total){
@@ -133,7 +185,6 @@ public class Pago {
         }
 
 
-
         // Verificar si la cantidad de cuotas está dentro del rango permitido
 
         return cuota >= 0 && cuota <= maximo;
@@ -142,60 +193,8 @@ public class Pago {
 
 
 
-    public double calcularDescuentoColegio(EstudiantesEntity estudiante,int cuota ){
-        double arancel = 1500000;
-        double descuentoTipoColegio = 0.0;
-
-        // Convertir el tipo de colegio ingresado a minúsculas para hacerlo insensible a mayúsculas/minúsculas
-        String tipoColegioIngresado = estudiante.getTipo_colegio().toLowerCase();
 
 
-        // Calcular descuento según Tipo de colegio de procedencia
-        if (cuota > 0) {
-            switch (tipoColegioIngresado) {
-                case "municipal":
-                    descuentoTipoColegio = 0.2; // 20% de descuento para colegio municipal
-                    break;
-                case "subvencionado":
-                    descuentoTipoColegio = 0.1; // 10% de descuento para colegio subvencionado
-                    break;
-                case "privado":
-                    descuentoTipoColegio = 0.0; // Sin descuento para colegio privado
-                    break;
-            }
-        } else if (cuota == 0) {
-            descuentoTipoColegio = 0.5; // 50% de descuento para pago al contado
-        }
-
-        return  arancel * descuentoTipoColegio;
-    }
-
-    public double calcularDescuentoAno(EstudiantesEntity estudiante,int cuota){
-
-        double arancel = 1500000;
-        double descuentoAnos = 0.0;
-
-        if(cuota >0 ) {
-            // Calcular descuento según años desde que egresó del colegio
-            int cantidadAnos = 2023 - estudiante.getAno_egreso();
-            if (cantidadAnos < 1) {
-                descuentoAnos = 0.15; // 15% de descuento para menos de 1 año
-            } else if (cantidadAnos >= 1 && cantidadAnos <= 2) {
-                descuentoAnos = 0.08; // 8% de descuento para 1-2 años
-            } else if (cantidadAnos >= 3 && cantidadAnos <= 4) {
-                descuentoAnos = 0.04; // 4% de descuento para 3-4 años
-            }
-        }
-        else if(cuota==0){
-            descuentoAnos=0;
-        }
-        return arancel * descuentoAnos;
-    }
-
-    public double calcularDescuentoAcumulable(double descuento1,double descuento2){
-        double arancel = 1500000;
-        return arancel - (descuento1 + descuento2);
-    }
 
 
 

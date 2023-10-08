@@ -5,6 +5,7 @@ import lombok.Generated;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,6 +27,7 @@ public class PruebasService {
     //Obtener todos las pruebas
     public ArrayList<PruebasEntity> obtenerPruebas(){ return (ArrayList<PruebasEntity>) pruebasRepository.findAll();}
 
+    public Double findPromedioPuntaje(String rut){return pruebasRepository.findPromedioPuntaje(rut);};
 
     @Generated
     public String guardar(MultipartFile file){

@@ -6,6 +6,7 @@ import edu.mtisw.monolithicwebapp.entities.EstudiantesEntity;
 import edu.mtisw.monolithicwebapp.repositories.CuotasRepository;
 import edu.mtisw.monolithicwebapp.repositories.ResumenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -28,6 +29,14 @@ public class CuotasService {
         return (ArrayList<CuotasEntity>)cuotasRepository.findAll();
     }
 
+    public int findcantidadpagas(String rut){return cuotasRepository.findcantidadpagas(rut);}
+
+    public int findCantidad(String rut){return cuotasRepository.findCantidadCuotas(rut);}
+
+
+    public  Double findMontoTotalPagado(String rut){return cuotasRepository.findMontoTotalPagado(rut);}
+    public  Double findMontoTotalPendiente(String rut){return cuotasRepository.findMontoTotalPendiente(rut);}
+
     //Guardar una cuota
     public void pagando(int id) {
         CuotasEntity cuota = cuotasRepository.findById(id);
@@ -45,5 +54,6 @@ public class CuotasService {
             cuotasRepository.save(cuota);
         }
     }
+
 
 }
