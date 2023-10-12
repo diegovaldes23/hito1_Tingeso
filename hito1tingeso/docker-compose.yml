@@ -26,7 +26,7 @@ services:
     container_name: tingeso1
     image: diez2332/tingeso1
     ports:
-      - "8090:8090"
+      - "8091:8090"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/hito1?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
       - SPRING_DATASOURCE_USERNAME=root
@@ -41,7 +41,7 @@ services:
     container_name: tingeso2
     image: diez2332/tingeso1
     ports:
-      - "8091:8090"
+      - "8092:8090"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/hito1?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
       - SPRING_DATASOURCE_USERNAME=root
