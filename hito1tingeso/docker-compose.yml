@@ -5,13 +5,12 @@ services:
     container_name: nginx-proxy
     restart: always
     ports:
-      - "81:81"
+      - "80:80"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
     depends_on:
       - app1
       - app2
-      - app3
 
   mysql-db:
     image: mysql
@@ -27,7 +26,7 @@ services:
     container_name: tingeso1
     image: diez2332/tingeso1
     ports:
-      - "8093:8092"
+      - "8090:8090"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/hito1?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
       - SPRING_DATASOURCE_USERNAME=root
@@ -42,22 +41,7 @@ services:
     container_name: tingeso2
     image: diez2332/tingeso1
     ports:
-      - "8094:8092"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/hito1?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=root
-    deploy:
-      restart_policy:
-        condition: on-failure
-    depends_on:
-      - mysql-db
-
-  app3:
-    container_name: tingeso3
-    image: diez2332/tingeso1
-    ports:
-      - "8095:8092"
+      - "8091:8090"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/hito1?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
       - SPRING_DATASOURCE_USERNAME=root
