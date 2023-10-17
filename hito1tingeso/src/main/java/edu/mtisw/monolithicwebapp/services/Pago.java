@@ -191,13 +191,6 @@ public class Pago {
 
     }
 
-
-
-
-
-
-
-
     public static double calcularDescuentoPuntajes(ArrayList<PruebasEntity> pruebas, String vencimiento, int cantidad_cuotas, double capital) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -210,8 +203,6 @@ public class Pago {
 
             double suma = 0.0;
             int contador = 0;
-
-            //System.out.println("Mes de vencimiento: " + mesVencimiento);
 
             for (PruebasEntity prueba : pruebas) {
                 // Convertir la fecha de la prueba a formato Date
@@ -236,12 +227,9 @@ public class Pago {
                 //System.out.println("No hay pruebas en el mes.");
                 return 0.0;
             }
-
             double puntajePromedio = suma / contador;
-            //System.out.println("Puntaje promedio: " + puntajePromedio);
 
             double descuentoPuntaje = 0.0;
-
             if (puntajePromedio >= 950 && puntajePromedio <= 1000) {
                 descuentoPuntaje = 0.10; // Descuento del 10% para puntajes entre 950 y 1000
             } else if (puntajePromedio >= 900 && puntajePromedio < 950) {
@@ -249,13 +237,8 @@ public class Pago {
             } else if (puntajePromedio >= 850 && puntajePromedio < 900) {
                 descuentoPuntaje = 0.02; // Descuento del 2% para puntajes entre 850 y 899
             }
-
             double pagoFinal = capital * descuentoPuntaje;
-            //System.out.println("Pago final después del descuento de puntaje: " + pagoFinal);
-
-
             return pagoFinal;
-
         } catch (ParseException e) {
             e.printStackTrace();
             return 0.0;

@@ -44,8 +44,8 @@ public class CuotasService {
         // Obtener la fecha actual
         LocalDate fechaActual = LocalDate.now();
 
-        // Verificar si la fecha actual NO está entre el 3 y el 10 de cada mes
-        if (fechaActual.getDayOfMonth() >=3  && fechaActual.getDayOfMonth() <= 10) {
+        // Verificar si la fecha actual NO está entre el 5 y el 10 de cada mes
+        if (fechaActual.getDayOfMonth() >=5  && fechaActual.getDayOfMonth() <= 10) {
             cuota.setEstado("Pagado");
 
             // Establecer la fecha de vencimiento como la fecha actual

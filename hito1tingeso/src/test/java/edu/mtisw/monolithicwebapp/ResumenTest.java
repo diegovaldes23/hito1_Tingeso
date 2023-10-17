@@ -5,11 +5,13 @@ import edu.mtisw.monolithicwebapp.entities.PruebasEntity;
 import edu.mtisw.monolithicwebapp.services.Pago;
 import edu.mtisw.monolithicwebapp.services.ResumenService;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+@SpringBootTest
 
 public class ResumenTest {
     ResumenService resumenService = new ResumenService();

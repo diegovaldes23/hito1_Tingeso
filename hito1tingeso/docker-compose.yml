@@ -5,37 +5,42 @@ services:
     container_name: nginx-proxy
     restart: always
     ports:
-      - "80:80"
+      - "81:81"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
     depends_on:
       - app1
       - app2
 
-  mysql-db:
-    image: mysql
+  postgres-db:
+    image: postgres:latest
     restart: always
     volumes:
-      - ./data/db:/var/lib/mysql
+      - ./data/db:/var/lib/postgresql
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: hito1
+      POSTGRES_DB: hito1
+      POSTGRES_PASSWORD: 2332
+      POSTGRES_USER: nuevo
+
     ports:
-      - 33059:3306
+      - "5432:5432"
   app1:
     container_name: tingeso1
     image: diez2332/tingeso1
     ports:
       - "8091:8090"
+
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/hito1?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/hito1
+      - SPRING_DATASOURCE_USERNAME=nuevo
+      - SPRING_DATASOURCE_PASSWORD=2332
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create
+
     deploy:
       restart_policy:
         condition: on-failure
     depends_on:
-      - mysql-db
+      - postgres-db
 
   app2:
     container_name: tingeso2
@@ -43,11 +48,21 @@ services:
     ports:
       - "8092:8090"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/hito1?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/hito1
+      - SPRING_DATASOURCE_USERNAME=nuevo
+      - SPRING_DATASOURCE_PASSWORD=2332
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create
+
     deploy:
       restart_policy:
         condition: on-failure
     depends_on:
-      - mysql-db
+      - postgres-db
+
+
+
+
+
+
+
+

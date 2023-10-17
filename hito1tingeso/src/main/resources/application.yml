@@ -1,0 +1,23 @@
+
+server:
+  port: 8090
+
+spring:
+  application:
+    name: hito1tingeso
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+  datasource:
+    plataform: postgres
+    driver-class-name: org.postgresql.Driver
+    dbname: hito1
+    url: jdbc:postgresql://localhost:5432/hito1
+    username: nuevo
+    password: 2332
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB

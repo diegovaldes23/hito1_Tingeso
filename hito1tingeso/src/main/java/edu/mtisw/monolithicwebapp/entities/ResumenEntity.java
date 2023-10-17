@@ -1,6 +1,6 @@
 package edu.mtisw.monolithicwebapp.entities;
 
-import com.sun.istack.NotNull;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,6 @@ import javax.persistence.*;
 public class ResumenEntity {
     @Id
     @NotNull                                 // Anotación de validación personalizada
-    @Column(unique = true, nullable = false) // Configuración de la columna en la base de datos
 
     private String rut;                 // Identificación única del resumen (rut del estudiante)
     private String nombre_estudiante;   // Nombre del estudiante asociado al resumen
