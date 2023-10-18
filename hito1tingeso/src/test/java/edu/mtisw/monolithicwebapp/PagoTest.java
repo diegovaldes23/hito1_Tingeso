@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 
@@ -228,5 +228,30 @@ public class PagoTest {
         // Verificar el sabor del resultado
         assertEquals(100, resultado, 0);
     }
+
+
+    @Test
+    void testCalcularDescuentoPuntajesRangoAlto() {
+        ArrayList<PruebasEntity> pruebas = new ArrayList<>();
+        PruebasEntity prueba = new PruebasEntity();
+        prueba.setFecha_examen("01/02/2023");
+        prueba.setPuntaje("960");
+        pruebas.add(prueba);
+
+        double descuento = pago.calcularDescuentoPuntajes(pruebas, "01/02/2023", 1, 1000);
+        assertEquals(100, descuento, 0.0); // 10% de 1000 es 100.
+    }
+    @Test
+    void testCalcularDescuentoPuntajesFechaMalFormateada() {
+        ArrayList<PruebasEntity> pruebas = new ArrayList<>();
+        PruebasEntity prueba = new PruebasEntity();
+        prueba.setFecha_examen("01-02-2023"); // Usando guiones en lugar de barras.
+        prueba.setPuntaje("960");
+        pruebas.add(prueba);
+
+        double descuento = pago.calcularDescuentoPuntajes(pruebas, "01/02/2023", 1, 1000);
+        assertEquals(0.0, descuento, 0.0); // Debería devolver 0 debido al error.
+    }
+
 
 }
